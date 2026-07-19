@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["crates/biomass-lot", "crates/gap-report", "crates/baccord"]
+members = ["crates/biomass-lot", "crates/gap-report", "crates/baccord", "crates/treasury"]
 
 # Licensing decided per crate against the real dependency graph, never blanket.
 # The test is the licence of what you LINK, not whether you touch the kernel at all.
