@@ -1,0 +1,11 @@
+[package]
+name = "baccord"
+version = "0.1.0"
+edition.workspace = true
+license = "MIT OR Apache-2.0"
+description = "Accords that execute what both parties already agreed. TESTNET ONLY. NotDetermined never releases; BNR holds no key that can move funds; no silence becomes consent. The E-DEP dispute-deposit waterfall returns your own money the earlier you settle. Deposits and legs are stables; b appears nowhere."
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+attestation-core = { git = "https://github.com/beehive-nature/attestation-core", rev = "cb06633446dffb88860c73d5933034e4036c6a56" }
