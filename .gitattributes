@@ -1,7 +1,16 @@
-# Fixtures are digest-pinned: their recorded sha256 must be what a stranger receives from a
-# clone, on any platform. Git's autocrlf normalisation silently rewrites line endings on
-# checkout, which changes the bytes and breaks the digest — verified by cloning fresh and
-# finding a mismatch, not assumed.
+# ANYTHING WITH A RECORDED DIGEST GOES HERE.
 #
-# -text disables all line-ending conversion. Anything whose digest is recorded belongs here.
+# Git's autocrlf rewrites line endings on checkout. A digest-pinned artifact then hashes
+# differently for the reader than for the author, and the reader's honest conclusion is that
+# the file was tampered with. A digest that fails on clone is worse than no digest at all.
+#
+# This has now bitten this project three times in one day: the WELLness surfaces were
+# protected by `* text=auto eol=lf` and survived; the C-2 fixture was pinned without
+# protection and did not; and the C-2 explainer was pinned an hour after that fix with a
+# rule scoped to fixtures/ only. The narrow rule was the mistake — protection scoped to the
+# directory that happened to hurt, rather than to the property that matters.
+#
+# So: the whole tree, matching what beehive-WELLness does.
+* text=auto eol=lf
 fixtures/** -text
+*.woff2 binary
