@@ -1,0 +1,7 @@
+# Fixtures are digest-pinned: their recorded sha256 must be what a stranger receives from a
+# clone, on any platform. Git's autocrlf normalisation silently rewrites line endings on
+# checkout, which changes the bytes and breaks the digest — verified by cloning fresh and
+# finding a mismatch, not assumed.
+#
+# -text disables all line-ending conversion. Anything whose digest is recorded belongs here.
+fixtures/** -text
