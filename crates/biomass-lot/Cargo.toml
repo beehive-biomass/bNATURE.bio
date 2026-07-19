@@ -1,0 +1,10 @@
+[package]
+name = "biomass-lot"
+version = "0.1.0"
+edition.workspace = true
+license = "MIT OR Apache-2.0"
+description = "What is being sold and who says so. A grade is an attestation, never a fact: every value carries its attestor, method, target jurisdiction and sampling date. No price, no score, no rating. Eligibility::NotDetermined distinguishes an unanswerable question from a failure."
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"

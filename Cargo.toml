@@ -1,0 +1,10 @@
+[workspace]
+resolver = "2"
+members = ["crates/biomass-lot"]
+
+# Licensing decided per crate against the real dependency graph, never blanket.
+# The test is the licence of what you LINK, not whether you touch the kernel at all.
+#   - biomass-lot — serde only, pins nothing.
+
+[workspace.package]
+edition = "2021"
