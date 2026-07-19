@@ -1,0 +1,11 @@
+[package]
+name = "gap-report"
+version = "0.1.0"
+edition.workspace = true
+license = "MIT OR Apache-2.0"
+description = "The distance between what a person needs and what a document guarantees. No recommendation field, no Likelihood type, and Goals never leave the user's side. Every number anchors to a verbatim quotation and carries the digest of the document it measured."
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+attestation-core = { git = "https://github.com/beehive-nature/attestation-core", rev = "cb06633446dffb88860c73d5933034e4036c6a56" }
