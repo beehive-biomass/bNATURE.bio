@@ -16,7 +16,7 @@ Static, zero-external-reference surfaces.
 
 | surface | sha256 |
 |---|---|
-| `c2_contract_explainer.html` | `bae544f14592a951324a271808da9f9fe160ca01842a3746c6887743e6626f52` <!-- PUBLIC-CONSTANT: content digest --> |
+| `c2_contract_explainer.html` | `5ab6712fc415d1afd84e3204c6610a8b59307b3bbdeb268a676683ca4cd90b45` <!-- PUBLIC-CONSTANT: content digest --> |
 
 ## C-2 · what this explainer is, and what checking it caught
 
@@ -97,3 +97,33 @@ never fired. Both found by the selftest failing, not by reading the script.
 
 **It also found a gap in this page:** the explainer quoted an English contract without ever
 saying English is what governs. Now stated first, before any explanation.
+
+## Figures a reader acts on are written twice
+
+**The numeral exactly as filed, then the same figure in words** — the contract's own
+convention. The filed text reads `285,000 (two hundred eighty five thousand) lbs`, and legal
+drafting has done this for centuries because numerals are ambiguous and words are not.
+
+It earns its keep here specifically: `285,000` is `285.000` in es-ES, and `285.000` read by
+an English speaker is *two hundred eighty-five point zero zero zero*. **When this page is
+published in another language the numeral stays frozen exactly as filed and only the words
+are translated** — so a grower holding the contract sees the same glyphs on both, and the
+words carry the meaning where the separator cannot bite.
+
+Applied **only to figures a reader is asked to act on or compare** — the firm 45,000 and the
+optional 240,000. Not every number on the page; disambiguation that appears everywhere stops
+being read.
+
+`verify/check-figures.sh` generates the words from each numeral independently and compares.
+Five fixtures, run in CI:
+
+| fixture | expected |
+|---|---|
+| numeral and words agree | pass |
+| **numeral edited, words left behind** | **fail** |
+| **words edited, numeral left behind** | **fail** |
+| the contract's unhyphenated "eighty five" | pass — hyphenation is orthographic, not numeric |
+| **no pairs at all** | **refuse, exit 2** |
+
+A numeral and its words that disagree is worse than either alone: the page then states two
+different quantities with equal confidence.

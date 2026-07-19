@@ -1,0 +1,37 @@
+name: guards
+on: [push, pull_request]
+jobs:
+  cargo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cargo build --workspace
+      - run: cargo test --workspace
+      - run: cargo fmt --all --check
+  surfaces:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Law 2: a check that has only ever been observed passing is a decoration. Both
+      # selftests run on every build, and both have been watched biting.
+      - name: quotation-provenance selftest
+        run: sh verify/check-quotations.sh selftest
+      - name: figure-agreement selftest
+        run: sh verify/check-figures.sh selftest
+      - name: figures agree on the explainer
+        run: sh verify/check-figures.sh surfaces/c2_contract_explainer.html
+      - name: digests match the recorded table
+        run: |
+          set -e
+          n=0
+          for f in surfaces/*.html; do
+            b=$(basename "$f")
+            got=$(sha256sum "$f" | cut -d' ' -f1)
+            rec=$(grep -F "\`$b\`" surfaces/README.md | grep -oE '[0-9a-f]{64}')
+            [ -n "$rec" ] || { echo "no recorded digest for $b"; exit 1; }
+            [ "$got" = "$rec" ] || { echo "digest drift in $b"; exit 1; }
+            n=$((n+1))
+          done
+          # Law 1 — zero surfaces checked is a missing test, not a pass
+          [ "$n" -gt 0 ] || { echo "REFUSE: checked 0 surfaces"; exit 2; }
+          echo "digests verified: $n"
