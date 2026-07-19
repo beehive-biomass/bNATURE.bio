@@ -11,11 +11,16 @@
 <style>
 :root{
   color-scheme:light;
-  --biomass:#5FA544; --leaf:#86CC72; --you:#C7268F; --ai:#0E96A8; --info:#2E7FC0; --guard:#7D5FB0; --b-value:#E8B54B;
-  --paper:#F7F6F1; --card:#FFFFFF; --ink:#1E2320; --ink-mut:#5F6B62; --ink-dim:#93A096; --line:#E7E6DE;
+  /* Only tokens this page actually uses. An unused token that fails AA is a trap: it
+     sits in the palette looking available until someone reaches for it. --info, --ai,
+     --leaf and --b-value were declared here and never used; --info measured 3.95:1 on
+     paper, so it would have failed the moment it was. Removed rather than darkened,
+     because darkening a colour nothing uses is maintenance of a fiction. */
+  --you:#C7268F; --biomass:#5FA544; --guard:#6E51A0;
+  --paper:#F7F6F1; --card:#FFFFFF; --ink:#1E2320; --ink-mut:#5A655D; --ink-dim:#5A655D; --line:#E7E6DE;
   --font-ui:ui-sans-serif,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --font-mono:ui-monospace,"Cascadia Mono","SF Mono",Menlo,Consolas,monospace;
-  --text-2xs:clamp(11px,2.8vw,12px); --text-xs:clamp(12px,3vw,13px); --text-sm:clamp(13px,3.4vw,15px);
+  --text-2xs:clamp(13px,2.8vw,14px); --text-xs:clamp(14px,3vw,15px); --text-sm:clamp(15px,3.4vw,16px);
   --text-md:clamp(15px,3.8vw,17px); --text-lg:clamp(19px,5vw,24px); --text-xl:clamp(24px,6vw,32px);
   --s2:12px;--s3:18px;--s4:24px;--s5:36px;--radius:14px;--pill:999px;
 }
@@ -45,7 +50,7 @@ blockquote cite{display:block;margin-top:6px;font-style:normal;font-family:var(-
 .helps{border-left:4px solid var(--biomass)}
 .tbl{width:100%;border-collapse:collapse;font-size:var(--text-xs);margin:var(--s2) 0}
 .tbl td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
-.tbl td:last-child{text-align:end;font-family:var(--font-mono);white-space:nowrap}
+.tbl td:last-child{text-align:end;font-family:var(--font-mono)}
 .foot{margin-top:var(--s5);color:var(--ink-dim);font-size:var(--text-2xs);font-family:var(--font-mono);border-top:1px solid var(--line);padding-top:var(--s3)}
 </style>
 </head>

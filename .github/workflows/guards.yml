@@ -18,6 +18,10 @@ jobs:
         run: sh verify/check-quotations.sh selftest
       - name: figure-agreement selftest
         run: sh verify/check-figures.sh selftest
+      - name: contrast selftest
+        run: sh verify/check-contrast.sh selftest
+      - name: contrast on the explainer
+        run: sh verify/check-contrast.sh surfaces/c2_contract_explainer.html
       - name: figures agree on the explainer
         run: sh verify/check-figures.sh surfaces/c2_contract_explainer.html
       - name: digests match the recorded table

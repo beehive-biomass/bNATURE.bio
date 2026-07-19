@@ -16,7 +16,7 @@ Static, zero-external-reference surfaces.
 
 | surface | sha256 |
 |---|---|
-| `c2_contract_explainer.html` | `5ab6712fc415d1afd84e3204c6610a8b59307b3bbdeb268a676683ca4cd90b45` <!-- PUBLIC-CONSTANT: content digest --> |
+| `c2_contract_explainer.html` | `b15016529576ca90b9294b784a58b4e0e613b8b25eb1f6ffa11e2239ccb86515` <!-- PUBLIC-CONSTANT: content digest --> |
 
 ## C-2 · what this explainer is, and what checking it caught
 
@@ -127,3 +127,49 @@ Five fixtures, run in CI:
 
 A numeral and its words that disagree is worse than either alone: the page then states two
 different quantities with equal confidence.
+
+## C-5 · accessibility, on this page first
+
+Audited **before** the eight WELLness surfaces, deliberately: this is the page a grower opens
+today — possibly in his sixties, on a phone, outdoors — and checking it after he has read it
+would be checking the wrong thing at the wrong time.
+
+**It shipped with 31 of 122 text elements below WCAG 2.1 AA.** Measured in a browser against
+real composited backgrounds, not estimated from the stylesheet.
+
+| | before | after |
+|---|---|---|
+| contrast failures | **31 / 122** | **0 / 122** |
+| lowest ratio | 2.52 : 1 | **4.82 : 1** |
+| reflow at 320 px | **overflowed to 337 px** | fits |
+| smallest text | 11 px | **13 px** |
+
+**The cause was not carelessness about colour.** `--ink-dim` (#93A096, 2.52:1) was a
+decorative grey doing a reading job — section numbers, citations, the footer. It had never
+been contrast-tested *for text* because it was never meant to be text. Now `#5A655D`.
+`--guard` failed only on the tinted callout at 4.03:1; now `#6E51A0`.
+
+**The reflow failure was self-inflicted an hour earlier.** Adding `45,000 (forty-five
+thousand) lb` to a cell carrying `white-space:nowrap` pushed the page to 337 px. The
+numeral-and-words device — added for accessibility across locales — broke accessibility on
+narrow screens. Fixed by letting the cell wrap.
+
+**Two measurement bugs were caught before they caused a wrong fix.** The first background
+resolver returned `color-mix(guard 7%, transparent)` at full strength instead of compositing
+the alpha, so it measured against a colour not on screen and would have had me "fix"
+`--ink-mut`, which passes. The second was in the checker: token names begin with `--`, which
+`grep` reads as end-of-options — and the empty-set fixture *passed for the wrong reason*, a
+green result produced by a broken extractor rather than by absent tokens.
+
+**Unused tokens were removed rather than darkened.** `--info`, `--ai`, `--leaf` and
+`--b-value` were declared and never used; `--info` measures **3.95:1** and would have failed
+the moment anyone reached for it. Darkening a colour nothing uses is maintenance of a
+fiction.
+
+**Carried to the eight:** `d12_fat_scan_result.html` uses `--info` for its spread-chip text.
+Same token, same 3.95:1. Found by the checker, not by looking.
+
+`verify/check-contrast.sh` runs in CI. Five fixtures, including the two colours that actually
+shipped broken and a "looks nicer" drift one step lighter — because the regression this
+guards is a token edited back toward what reads well on a designer's monitor indoors, where
+there is no feedback from the person who cannot read it.
